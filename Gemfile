@@ -22,6 +22,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 # Webpacker
 gem 'webpacker', '5.2.1'
+gem 'react-rails', '~> 2.6', '>= 2.6.1'
+gem 'ruby-trello', '~> 3.0'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
