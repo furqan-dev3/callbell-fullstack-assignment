@@ -20,7 +20,6 @@ class Api::V1::CardsController < ApplicationController
     end
   end
 
-
   private 
 
   def card_params

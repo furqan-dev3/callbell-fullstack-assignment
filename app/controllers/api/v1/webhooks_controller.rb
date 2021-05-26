@@ -1,8 +1,43 @@
 class Api::V1::WebhooksController < ApplicationController
-  def index
-    # TODO:
-    #   - insert the card to database if the event type is "createCard"
-    #   - update the card in database if the event type is "updateCard"
-    #   - delete the card in database if the event type is "deleteCard"
+  
+  def create
+    begin
+      @event = JSON.parse(request.body.read)
+      case @event['action']['type']
+        when 'createCard'
+          create_card
+        when 'updateCard'
+          update_card
+        when 'deleteCard'
+          delete_card
+      end
+    rescue JSON::ParserError => e
+      render json: {:status => 400, :error => "Invalid payload"} and return
+    end
+    render json: {:status => 200}
   end
+
+  private
+      
+  def create_card
+    card_data
+    Card.create(card_id: @card_data['id'], name: @card_data['name'], description: @card_data['desc'], idShort: @card_data['idShort'], shortLink: @card_data['shortLink'] )
+  end
+  
+  def update_card
+    card_data
+    card = Card.find_by(card_id: @card_data['id'])
+    card.update(card_id: @card_data['id'], name: @card_data['name'], description: @card_data['desc'], idShort: @card_data['idShort'], shortLink: @card_data['shortLink']) if card.present?
+  end
+
+  def delete_card
+    card_data
+    card = Card.find_by(card_id: @card_data['id'])
+    card.destroy if card.present?
+  end
+
+  def card_data
+    @card_data = @event['action']['data']['card']
+  end
+
 end
