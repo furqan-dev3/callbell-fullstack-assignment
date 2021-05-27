@@ -6,17 +6,15 @@ RSpec.describe Api::V1::CardsController, type: :controller do
       get :index
     end
 
-    it "JSON body response contains expected recipe attributes" do
-      json_response = JSON.parse(response.body)
-      expect(hash_body.keys).to match_array([:id, :name, :description])
+    it "return all cards" do
+      expect(response).to have_http_status(:success)
     end
-    # pending "add some examples (or delete) #{__FILE__}"
+    
   end
 
   describe "POST /create" do
     it 'returns status ok' do
       expect(response).to have_http_status(:success)
     end
-    # pending "add some examples (or delete) #{__FILE__}"
   end
 end

@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::WebhooksController, type: :controller do
-  describe "GET /index" do
-    # TODO: Test your trello webhook logic here. 
-    pending "add some examples (or delete) #{__FILE__}"
+ 
+  describe "POST /create" do
+    it 'returns status 200' do
+      expect(response).to have_http_status(:success)
+    end
   end
 end

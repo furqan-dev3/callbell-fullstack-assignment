@@ -1,3 +1,5 @@
+require 'trello'
+
 class Api::V1::WebhooksController < ApplicationController
   
   def create
@@ -21,7 +23,13 @@ class Api::V1::WebhooksController < ApplicationController
       
   def create_card
     card_data
-    Card.create(card_id: @card_data['id'], name: @card_data['name'], description: @card_data['desc'])
+    client = Trello::Client.new(
+      developer_public_key: ENV['TRELLO_KEY'],
+      member_token: ENV['TRELLO_TOKEN'],
+    )
+    card = client.find(:card, @card_data['id'])
+    desc = card.attributes['desc']
+    Card.create(card_id: @card_data['id'], name: @card_data['name'], description: desc)
   end
   
   def update_card
