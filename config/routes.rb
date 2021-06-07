@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resource :webhooks
+      resources :webhooks
       resources :cards
     end
   end
